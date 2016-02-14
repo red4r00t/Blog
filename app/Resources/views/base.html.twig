@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <nav>
+            {% block navbar %}{% endblock %}
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block body %}{% endblock %}
+                </div>
+                <div class="col-md-4">
+                    {% block sidebar %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/style.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

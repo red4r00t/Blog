@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Johnson Gao's Website{% endblock %}
+
+{% block body %}
+    {% for post in posts %}
+        <article class="well">
+            <h2><a href="{{ path('index_post_show', {'slug': post.slug}) }}">{{ post.title }}</a></h2>
+            <ul class="list-inline">
+                <li><i class="fa fa-calendar"></i>&nbsp;{{ post.updated | date('jS F Y h:i:s A') }}</li>
+                <li><i class="fa fa-user"></i>&nbsp;{{ post.author }}</li>
+                <li><i class="fa fa-folder-open"></i>&nbsp;{{ post.category.name }}</li>
+                <li><i class="fa fa-comments"></i>&nbsp;{{ post.comments.count }}</li>
+            </ul>
+            <a href="{{ path('index_post_show', {'slug': post.slug}) }}">
+                <img class="img-responsive" src="{{ asset(['images/', post.image] | join) }}" title="{{ post.title }}"/>
+            </a>
+            <p>{{ post.content }}</p>
+            <a class="btn btn-danger" href="{{ path('index_post_show', {'slug': post.slug}) }}">Read More</a>
+        </article>
+        <hr>
+        <hr>
+    {% endfor %}
+    <nav class="text-center">
+        <ul class="pagination">
+            <li>
+                <a href="{{ path('index_paginated', {page: 1}) }}" aria-label="First">
+                    <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index_paginated', {page: page - 1 < 1 ? 1 : page - 1}) }}" aria-label="Previous">
+                    <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                </a>
+            </li>
+            {% for i in 1..pages %}
+                <li {{ page == i ? 'class="active"' }}>
+                    <a href="{{ path('index_paginated', {page: i}) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="{{ path('index_paginated', {page: page + 1 <= pages ? page + 1 : page}) }}" aria-label="Next">
+                    <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index_paginated', {page: pages}) }}" aria-label="Last">
+                    <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="well">
+        {% for post in posts %}
+            <div class="media">
+                <div class="media-left media-middle">
+                    <a href="{{ path('index_post_show', {'slug': post.slug}) }}">
+                        <img style="width: 64px; height: 64px" class="media-object"
+                             src="{{ asset(['images/', post.image] | join) }}"
+                             title="{{ post.title }}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading"><a
+                                href="{{ path('index_post_show', {'slug': post.slug}) }}">{{ post.title }}</a></h4>
+                    <ul class="list-inline">
+                        <li><i class="fa fa-calendar"></i>&nbsp;{{ post.updated | date('jS F Y h:i:s A') }}</li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
